@@ -1,0 +1,125 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#04121f" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'games/css/puzzle_mundial.css' %}" />
+  <title>Puzzle Mundial</title>
+</head>
+<body>
+  <div id="watermark" class="runner-watermark hidden"></div>
+
+  <main class="runner-shell">
+    <section id="startScreen" class="runner-panel screen-start">
+      <div class="start-copy">
+        <div class="brand-row">
+          <img id="logo" class="brand-logo hidden" alt="Logo del evento" />
+          <span class="game-chip">Puzzle Mundial</span>
+        </div>
+        <h1 id="title">PUZZLE MUNDIAL</h1>
+        <p id="subtitle">Armá la imagen del mundial pieza por pieza.</p>
+
+        <div class="meta-pills">
+          <span id="metaGrid" class="meta-pill">3 × 3</span>
+          <span id="metaTarget" class="meta-pill">Objetivo 180s</span>
+          <span id="metaMode" class="meta-pill">Intercambio de piezas</span>
+        </div>
+
+        <div class="start-actions">
+          <button id="btnStart" class="btn btn-primary" type="button">Empezar puzzle</button>
+          <a href="/" class="btn btn-secondary" id="btnBack">Volver</a>
+        </div>
+      </div>
+
+      <div class="start-visual">
+        <img id="heroImage" class="hero-image" alt="Vista previa del puzzle" />
+      </div>
+    </section>
+
+    <section id="gameScreen" class="screen-game hidden">
+      <header class="game-topbar runner-panel">
+        <div class="topbar-info">
+          <p class="eyebrow">Puzzle Mundial</p>
+          <h2 id="gameTitle">Armá la imagen completa</h2>
+        </div>
+        <div class="topbar-actions">
+          <button id="btnReset" class="btn btn-secondary" type="button">Mezclar</button>
+          <button id="btnExitGame" class="btn btn-ghost" type="button">Salir</button>
+        </div>
+      </header>
+
+      <div class="game-layout">
+        <section class="runner-panel board-panel">
+          <div id="gameStatus" class="status-line"></div>
+          <div id="board" class="puzzle-board" aria-live="polite"></div>
+        </section>
+
+        <aside class="runner-panel side-panel">
+          <div class="stats-row">
+            <div class="side-block">
+              <p class="side-label">Tiempo</p>
+              <p id="timerValue" class="side-value">00:00</p>
+            </div>
+            <div class="side-block">
+              <p class="side-label">Movimientos</p>
+              <p id="movesValue" class="side-value">0</p>
+            </div>
+            <div class="side-block">
+              <p class="side-label">Progreso</p>
+              <p id="progressValue" class="side-value">0%</p>
+            </div>
+          </div>
+          <div class="side-block side-block-image">
+            <p class="side-label">Imagen objetivo</p>
+            <img id="referenceImage" class="reference-image" alt="Referencia del puzzle" />
+          </div>
+          <div class="side-block help-block">
+            <p class="side-label">Cómo se juega</p>
+            <p class="side-copy">Tocá una pieza para seleccionarla, luego tocá otra para intercambiarlas. También podés arrastrar.</p>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="completionScreen" class="runner-panel screen-complete hidden">
+      <p class="eyebrow">Resultado</p>
+      <h2 id="completionTitle">¡Golazo!</h2>
+      <p id="completionSubtitle" class="completion-copy">Completaste el puzzle y cerraste la jugada.</p>
+
+      <div class="completion-stats">
+        <div class="completion-card">
+          <span class="completion-label">Tiempo final</span>
+          <strong id="completionTime">00:00</strong>
+        </div>
+        <div class="completion-card">
+          <span class="completion-label">Movimientos</span>
+          <strong id="completionMoves">0</strong>
+        </div>
+        <div class="completion-card">
+          <span class="completion-label">Tamaño</span>
+          <strong id="completionGrid">3 × 3</strong>
+        </div>
+      </div>
+
+      <div class="completion-actions">
+        <button id="btnPlayAgain" class="btn btn-primary" type="button">Jugar de nuevo</button>
+        <a href="/" class="btn btn-secondary">Volver al inicio</a>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    window.GAME_SLUG = "puzzle-mundial";
+    window.RETURN_URL = "/";
+    window.PUZZLE_MUNDIAL_ASSETS = {
+      fallbackPuzzleImage: "{% static 'games/img/messi-celebration.jpg' %}",
+      fallbackBackgroundImage: "{% static 'games/img/stadium-bg.jpg' %}",
+    };
+  </script>
+  <script src="{% static 'games/js/puzzle_mundial.js' %}"></script>
+</body>
+</html>

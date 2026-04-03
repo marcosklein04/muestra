@@ -1,0 +1,517 @@
+/* ============================================================
+   Muestra — Puzzle Mundial CSS
+   Mobile-first adaptation of PlayTek's puzzle_mundial.css
+   ============================================================ */
+
+:root {
+  --runner-viewport-height: 100vh;
+  --puzzle-primary: #00f5e9;
+  --puzzle-secondary: #081a2b;
+  --puzzle-text: #f4fbff;
+  --puzzle-muted: rgba(244, 251, 255, 0.72);
+  --puzzle-panel-bg: rgba(8, 26, 43, 0.84);
+  --puzzle-panel-border: #1b6888;
+  --puzzle-accent: #00f5e9;
+  --puzzle-success: #8ee05f;
+  --puzzle-bg-color: #04121f;
+}
+
+@supports (height: 100dvh) {
+  :root { --runner-viewport-height: 100dvh; }
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  font-family: Outfit, Inter, Arial, sans-serif;
+  background: var(--puzzle-bg-color);
+  color: var(--puzzle-text);
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  min-height: var(--runner-viewport-height);
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+
+button, input { font: inherit; }
+
+.hidden { display: none !important; }
+
+/* Watermark */
+.runner-watermark {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  display: grid;
+  place-items: center;
+  font-size: clamp(48px, 10vw, 120px);
+  font-weight: 800;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(0, 245, 233, 0.18);
+  z-index: 1;
+}
+
+/* Shell */
+.runner-shell {
+  position: relative;
+  z-index: 2;
+  width: 100%;
+  min-height: var(--runner-viewport-height);
+  display: grid;
+  gap: 16px;
+  align-content: start;
+  padding: clamp(12px, 2.5vw, 28px);
+}
+
+/* Panel base */
+.runner-panel {
+  border: 1px solid color-mix(in srgb, var(--puzzle-panel-border) 88%, transparent);
+  background: color-mix(in srgb, var(--puzzle-panel-bg) 100%, transparent);
+  box-shadow: 0 22px 80px rgba(0, 0, 0, 0.38);
+  backdrop-filter: blur(20px);
+}
+
+/* ── Start Screen ───────────────────────────────────────── */
+.screen-start {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.8fr);
+  gap: 20px;
+  padding: clamp(20px, 3vw, 32px);
+  border-radius: 28px;
+}
+
+.brand-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.brand-logo {
+  width: 80px;
+  height: 54px;
+  object-fit: contain;
+}
+
+.game-chip,
+.meta-pill,
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.game-chip,
+.meta-pill {
+  padding: 8px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--puzzle-text);
+}
+
+.eyebrow {
+  color: var(--puzzle-accent);
+  margin: 0 0 8px;
+}
+
+.start-copy h1,
+#completionTitle {
+  margin: 0;
+  font-size: clamp(32px, 6vw, 64px);
+  line-height: 0.94;
+}
+
+#subtitle,
+.completion-copy,
+.side-copy,
+.status-line {
+  color: var(--puzzle-muted);
+}
+
+#subtitle {
+  max-width: 40rem;
+  margin: 14px 0 0;
+  font-size: clamp(15px, 2vw, 18px);
+  line-height: 1.6;
+}
+
+.meta-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 20px 0 0;
+}
+
+.start-actions,
+.completion-actions,
+.topbar-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.start-actions { margin-top: 24px; }
+
+/* ── Buttons ─────────────────────────────────────────────── */
+.btn {
+  border: 0;
+  border-radius: 16px;
+  padding: 14px 20px;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 15px;
+  min-height: 48px; /* touch target */
+  white-space: nowrap;
+}
+
+.btn:hover { transform: translateY(-1px); }
+.btn:active { transform: scale(0.97); }
+.btn:disabled { opacity: 0.55; cursor: not-allowed; transform: none; }
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--puzzle-primary), #38d0ff);
+  color: #04121f;
+  box-shadow: 0 12px 30px rgba(0, 245, 233, 0.24);
+  font-weight: 800;
+}
+
+.btn-secondary,
+.btn-ghost {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--puzzle-text);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.btn-ghost { background: transparent; }
+
+/* ── Start Visual ────────────────────────────────────────── */
+.start-visual {
+  min-height: clamp(220px, 36vh, 480px);
+}
+
+.hero-image,
+.reference-image {
+  width: 100%;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  object-fit: cover;
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.hero-image {
+  height: 100%;
+  min-height: clamp(220px, 36vh, 480px);
+}
+
+/* ── Game TopBar ─────────────────────────────────────────── */
+.game-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 20px;
+  border-radius: 20px;
+}
+
+.topbar-info h2 {
+  margin: 4px 0 0;
+  font-size: clamp(18px, 2.5vw, 24px);
+}
+
+/* ── Game Layout ─────────────────────────────────────────── */
+.game-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(220px, 28vw);
+  gap: 16px;
+}
+
+.board-panel,
+.side-panel,
+.screen-complete {
+  border-radius: 24px;
+}
+
+.board-panel { padding: 18px; }
+
+.status-line {
+  min-height: 20px;
+  margin-bottom: 12px;
+  font-size: 14px;
+}
+
+.status-line.is-success { color: var(--puzzle-success); }
+.status-line.is-error { color: #ff8d8d; }
+
+/* ── Puzzle Board ────────────────────────────────────────── */
+.puzzle-board {
+  --grid-size: 3;
+  display: grid;
+  grid-template-columns: repeat(var(--grid-size), 1fr);
+  gap: clamp(6px, 1.2vw, 10px);
+  width: min(100%, 680px);
+  margin: 0 auto;
+}
+
+.puzzle-tile {
+  position: relative;
+  aspect-ratio: 1 / 1;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background-repeat: no-repeat;
+  background-size: calc(var(--grid-size) * 100%) calc(var(--grid-size) * 100%);
+  cursor: pointer;
+  overflow: hidden;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.03);
+  transition: transform 0.14s ease, box-shadow 0.14s ease, border-color 0.14s ease;
+  min-height: 44px; /* ensure touch target */
+}
+
+.puzzle-tile:hover { transform: translateY(-1px); }
+.puzzle-tile:active { transform: scale(0.96); }
+
+.puzzle-tile::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(255,255,255,0.08), transparent 40%, rgba(4,18,31,0.22));
+  pointer-events: none;
+}
+
+.puzzle-tile.is-selected {
+  border-color: var(--puzzle-accent);
+  box-shadow: 0 0 0 2px rgba(0, 245, 233, 0.28), 0 16px 26px rgba(0, 0, 0, 0.26);
+  transform: scale(1.04);
+}
+
+.puzzle-tile.is-correct {
+  border-color: color-mix(in srgb, var(--puzzle-success) 80%, white 20%);
+  box-shadow: 0 0 0 1px rgba(142, 224, 95, 0.22), 0 14px 24px rgba(142, 224, 95, 0.1);
+}
+
+/* ── Side Panel ──────────────────────────────────────────── */
+.side-panel {
+  padding: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  align-content: start;
+}
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.side-block {
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 14px;
+}
+
+.side-label,
+.completion-label {
+  margin: 0 0 6px;
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--puzzle-muted);
+  display: block;
+}
+
+.side-value {
+  margin: 0;
+  font-size: clamp(22px, 3vw, 30px);
+  font-weight: 800;
+}
+
+.reference-image { aspect-ratio: 1 / 1; }
+
+/* ── Completion ──────────────────────────────────────────── */
+.screen-complete {
+  padding: clamp(20px, 3vw, 32px);
+  text-align: center;
+}
+
+.completion-stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+  margin-top: 20px;
+}
+
+.completion-card {
+  padding: 16px;
+  border-radius: 18px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.completion-card strong {
+  display: block;
+  font-size: clamp(22px, 3vw, 28px);
+  margin-top: 6px;
+}
+
+.completion-actions {
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* ══════════════════════════════════════════════════════════
+   RESPONSIVE — Mobile Breakpoints
+   ══════════════════════════════════════════════════════════ */
+
+/* Tablet: stack start layout */
+@media (max-width: 960px) {
+  .screen-start {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-image {
+    min-height: 240px;
+    max-height: 320px;
+  }
+}
+
+/* Large phones / small tablets */
+@media (max-width: 720px) {
+  .game-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .side-panel {
+    order: -1; /* Stats above board on mobile */
+  }
+
+  .stats-row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .side-block-image,
+  .help-block {
+    display: none; /* Hide reference image and help on small screens to save space */
+  }
+
+  .game-topbar {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .topbar-actions {
+    width: 100%;
+  }
+
+  .topbar-actions .btn {
+    flex: 1;
+  }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+  .runner-shell {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .screen-start {
+    padding: 16px;
+    border-radius: 20px;
+  }
+
+  .start-copy h1 {
+    font-size: clamp(28px, 9vw, 42px);
+  }
+
+  .btn {
+    padding: 13px 18px;
+    font-size: 15px;
+  }
+
+  .start-actions {
+    flex-direction: column;
+  }
+
+  .start-actions .btn {
+    width: 100%;
+  }
+
+  .meta-pills {
+    gap: 8px;
+  }
+
+  .puzzle-board {
+    gap: 5px;
+  }
+
+  .puzzle-tile {
+    border-radius: 10px;
+  }
+
+  .completion-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .completion-actions {
+    flex-direction: column;
+  }
+
+  .completion-actions .btn {
+    width: 100%;
+  }
+}
+
+/* Very small / older phones */
+@media (max-width: 360px) {
+  .stats-row {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .stats-row .side-block:last-child {
+    display: none;
+  }
+}
+
+/* Landscape mobile: keep board visible */
+@media (max-height: 500px) and (orientation: landscape) {
+  .runner-shell {
+    min-height: auto;
+  }
+
+  .screen-start {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .start-visual {
+    min-height: 180px;
+  }
+
+  .hero-image {
+    min-height: 180px;
+  }
+}

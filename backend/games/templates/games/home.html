@@ -1,0 +1,79 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#04121f" />
+  <title>Muestra — Juegos</title>
+  <link rel="icon" type="image/png" href="{% static 'games/img/favicon.png' %}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'games/css/platform.css' %}" />
+</head>
+<body>
+  <div class="platform-bg"></div>
+
+  <header class="platform-header">
+    <div class="header-inner">
+      <div class="header-brand">
+        <div class="brand-logo-mark">
+          <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+            <circle cx="16" cy="16" r="15" stroke="#00f5e9" stroke-width="2"/>
+            <path d="M10 16l4 4 8-8" stroke="#00f5e9" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <span class="brand-name">Muestra</span>
+      </div>
+      <p class="header-tagline">Elegí un juego y empezá</p>
+    </div>
+  </header>
+
+  <main class="platform-main">
+    <section class="games-hero">
+      <h1 class="games-hero-title">¿A qué jugamos?</h1>
+      <p class="games-hero-subtitle">Tocá cualquier juego para empezar de inmediato.</p>
+    </section>
+
+    <section class="games-grid" aria-label="Juegos disponibles">
+      {% for game in games %}
+      <a href="{% url 'runner_page' game.slug %}" class="game-card game-card--{{ game.slug }}" aria-label="Jugar {{ game.name }}">
+        <div class="game-card__media">
+          {% if game.cover_image %}
+            <img src="{{ game.cover_image.url }}" alt="{{ game.name }}" class="game-card__cover" loading="lazy" />
+          {% else %}
+            <div class="game-card__cover-placeholder game-cover--{{ game.slug }}"></div>
+          {% endif %}
+          <div class="game-card__overlay"></div>
+        </div>
+        <div class="game-card__body">
+          <div class="game-card__meta">
+            <span class="game-card__badge">Jugar ahora</span>
+          </div>
+          <h2 class="game-card__name">{{ game.name }}</h2>
+          {% if game.description %}
+          <p class="game-card__desc">{{ game.description }}</p>
+          {% endif %}
+          <div class="game-card__cta">
+            <span class="cta-btn">
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <circle cx="10" cy="10" r="9" stroke="currentColor" stroke-width="1.5"/>
+                <path d="M8 7l5 3-5 3V7z" fill="currentColor"/>
+              </svg>
+              Empezar
+            </span>
+          </div>
+        </div>
+      </a>
+      {% empty %}
+      <p class="no-games">No hay juegos disponibles en este momento.</p>
+      {% endfor %}
+    </section>
+  </main>
+
+  <footer class="platform-footer">
+    <p>Powered by <strong>Muestra</strong></p>
+  </footer>
+</body>
+</html>

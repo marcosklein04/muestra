@@ -1,0 +1,146 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="screen-orientation" content="landscape" />
+  <meta name="theme-color" content="#0b3b23" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'games/css/arquero.css' %}" />
+  <title>El del Arquero</title>
+</head>
+<body>
+  <div id="rotatePrompt">
+    <span class="rotate-icon">&#x1F4F1;</span>
+    <p class="rotate-title">Rota tu dispositivo</p>
+    <p class="rotate-sub">El del Arquero se juega en horizontal.</p>
+  </div>
+
+  <div id="watermark" class="runner-watermark hidden"></div>
+
+  <main id="stage" class="keeper-shell">
+    <section id="startScreen" class="overlay-screen start-screen">
+      <div class="hero-card">
+        <div class="hero-brand">
+          <img id="logo" class="hero-logo hidden" alt="Logo del evento" />
+          <span class="hero-badge">World Cup Arcade</span>
+        </div>
+        <img id="heroImage" class="hero-image hidden" alt="Imagen de portada" />
+        <h1 id="title">EL DEL ARQUERO</h1>
+        <p id="subtitle">Mové al arquero de lado a lado y atajá todos los remates.</p>
+        <p id="instructions" class="instructions">Arrastrá al portero a izquierda y derecha para parar los balones.</p>
+
+        <div class="hero-stats">
+          <div class="hero-stat">
+            <span class="hero-stat-label">Duración</span>
+            <strong id="metaDuration">60s</strong>
+          </div>
+          <div class="hero-stat">
+            <span class="hero-stat-label">Pts por atajada</span>
+            <strong id="metaPoints">10</strong>
+          </div>
+          <div class="hero-stat">
+            <span class="hero-stat-label">Récord local</span>
+            <strong id="metaHighScore">0</strong>
+          </div>
+          <div class="hero-stat">
+            <span class="hero-stat-label">Bonus</span>
+            <strong id="metaBonus">Off</strong>
+          </div>
+          <div class="hero-stat">
+            <span class="hero-stat-label">Trampa</span>
+            <strong id="metaPenalty">Off</strong>
+          </div>
+        </div>
+
+        <div class="hero-actions">
+          <button id="btnStart" class="btn btn-primary" type="button">Tocar para jugar</button>
+          <a href="/" class="btn btn-secondary" id="btnBack">Volver</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="gameScreen" class="game-screen hidden">
+      <header class="top-ui">
+        <div id="scoreBox" class="score-box">
+          <span class="score-label">Puntos</span>
+          <strong id="scoreValue">0</strong>
+        </div>
+        <div class="timer-box">
+          <span class="score-label">Tiempo</span>
+          <strong id="timerValue">1:00</strong>
+        </div>
+        <div id="savesBox" class="score-box secondary-box">
+          <span class="score-label">Atajadas</span>
+          <strong id="savesValue">0</strong>
+        </div>
+      </header>
+
+      <div class="sponsor-slot sponsor-left"><span id="sponsorLeft"></span></div>
+      <div class="sponsor-slot sponsor-right"><span id="sponsorRight"></span></div>
+      <div class="sponsor-slot sponsor-bottom"><span id="sponsorBottom"></span></div>
+
+      <div class="field-lines">
+        <div class="center-circle"></div>
+        <div class="center-line"></div>
+        <div class="goal-area"></div>
+        <div class="penalty-area"></div>
+      </div>
+
+      <div id="statusLine" class="status-line"></div>
+      <div id="ballsLayer" class="balls-layer"></div>
+      <div id="goalkeeper" class="goalkeeper" aria-label="Portero"></div>
+    </section>
+
+    <section id="gameOverScreen" class="overlay-screen gameover-screen hidden">
+      <div class="hero-card hero-card-compact">
+        <div class="hero-badge-row">
+          <span id="newRecordBadge" class="record-badge hidden">¡NUEVO RÉCORD!</span>
+        </div>
+        <h2 id="completionTitle">FIN DEL JUEGO</h2>
+        <p id="completionSubtitle">Tus reflejos definieron el resultado.</p>
+
+        <div class="results-grid">
+          <div class="result-card">
+            <span class="result-label">Puntos</span>
+            <strong id="finalScore">0</strong>
+          </div>
+          <div class="result-card">
+            <span class="result-label">Atajadas</span>
+            <strong id="finalSaves">0</strong>
+          </div>
+          <div class="result-card">
+            <span class="result-label">Pelotas bonus</span>
+            <strong id="finalBonusCaught">0</strong>
+          </div>
+          <div class="result-card danger-card">
+            <span class="result-label">Goles recibidos</span>
+            <strong id="finalMissed">0</strong>
+          </div>
+          <div class="result-card danger-card">
+            <span class="result-label">Pelotas trampa</span>
+            <strong id="finalPenaltyCaught">0</strong>
+          </div>
+        </div>
+
+        <div class="hero-actions">
+          <button id="btnRestart" class="btn btn-primary" type="button">Jugar de nuevo</button>
+          <a href="/" class="btn btn-secondary">Volver al inicio</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    window.GAME_SLUG = "el-del-arquero";
+    window.RETURN_URL = "/";
+    // Request landscape lock where supported (Android Chrome, not iOS Safari)
+    if (screen.orientation && screen.orientation.lock) {
+      screen.orientation.lock("landscape").catch(() => {});
+    }
+  </script>
+  <script src="{% static 'games/js/arquero.js' %}"></script>
+</body>
+</html>
