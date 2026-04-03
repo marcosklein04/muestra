@@ -27,7 +27,7 @@ class GameAdmin(admin.ModelAdmin):
     inlines = [GameConfigInline]
     fieldsets = (
         (None, {
-            "fields": ("name", "slug", "description", "cover_image"),
+            "fields": ("name", "slug", "description", "cover_image_url"),
         }),
         ("Estado", {
             "fields": ("is_enabled", "is_featured", "sort_order"),

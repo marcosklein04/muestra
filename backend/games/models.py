@@ -11,7 +11,7 @@ class Game(models.Model):
     slug = models.SlugField(unique=True)
     name = models.CharField(max_length=100)
     description = models.TextField(blank=True)
-    cover_image = models.ImageField(upload_to="games/covers/", blank=True)
+    cover_image_url = models.URLField(blank=True, default="")
     is_enabled = models.BooleanField(default=True)
     is_featured = models.BooleanField(default=False)
     sort_order = models.PositiveIntegerField(default=0)

@@ -40,8 +40,8 @@
       {% for game in games %}
       <a href="{% url 'runner_page' game.slug %}" class="game-card game-card--{{ game.slug }}" aria-label="Jugar {{ game.name }}">
         <div class="game-card__media">
-          {% if game.cover_image %}
-            <img src="{{ game.cover_image.url }}" alt="{{ game.name }}" class="game-card__cover" loading="lazy" />
+          {% if game.cover_image_url %}
+            <img src="{{ game.cover_image_url }}" alt="{{ game.name }}" class="game-card__cover" loading="lazy" />
           {% else %}
             <div class="game-card__cover-placeholder game-cover--{{ game.slug }}"></div>
           {% endif %}
