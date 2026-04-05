@@ -633,17 +633,33 @@ button { font: inherit; }
   }
 
   /* Compact HUD */
-  .top-ui { inset: 6px 10px auto 10px; gap: 6px; }
-
-  .score-box, .timer-box {
-    padding: 6px 10px;
-    border-radius: 10px;
-    min-width: auto;
-    flex: 1 1 0;
+  .top-ui {
+    inset: max(1px, env(safe-area-inset-top)) 2px auto 2px;
+    gap: 0;
+    align-items: flex-start;
   }
 
-  .score-box strong, .timer-box strong { font-size: 20px; }
-  .score-label { font-size: 10px; }
+  .score-box, .timer-box {
+    padding: 0 4px;
+    border-radius: 0;
+    min-width: auto;
+    flex: 1 1 0;
+    border: 0;
+    background: transparent;
+    backdrop-filter: none;
+    box-shadow: none;
+  }
+
+  .score-box strong, .timer-box strong {
+    margin-top: 0;
+    font-size: 14px;
+    line-height: 1;
+  }
+
+  .score-label {
+    font-size: 7px;
+    letter-spacing: 0.04em;
+  }
 
   /* Wider field markings to match landscape proportions */
   .goal-area    { width: 240px; height: 90px; }

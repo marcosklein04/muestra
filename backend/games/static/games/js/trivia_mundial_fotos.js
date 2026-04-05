@@ -95,7 +95,7 @@
         chip_bg_color: "rgba(18, 50, 74, 0.84)",
       },
       watermark: { enabled: false },
-      content: { sparkle_questions: [] },
+      content: { sparkle_questions: [], question_pack_image_url: "" },
     };
   }
 
@@ -257,13 +257,15 @@
   function renderQuestion() {
     const question = currentQuestion();
     if (!question) return;
+    const fallbackQuestionImage = safeText(state.config.content?.question_pack_image_url, "");
+    const resolvedQuestionImage = safeText(question.image, fallbackQuestionImage);
 
     el.questionText.textContent = question.question;
 
-    const hasImage = Boolean(question.image);
+    const hasImage = Boolean(resolvedQuestionImage);
     el.questionVisual.classList.toggle("hidden", !hasImage);
     if (hasImage) {
-      el.questionImage.src = question.image;
+      el.questionImage.src = resolvedQuestionImage;
       el.questionImage.alt = question.question;
     }
 

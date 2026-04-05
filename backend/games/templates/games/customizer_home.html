@@ -1,0 +1,77 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#07111d" />
+  <title>Muestra Studio - Personalizar juegos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Oswald:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'games/css/customizer.css' %}" />
+</head>
+<body class="studio-body">
+  <div class="studio-bg"></div>
+
+  <header class="studio-header studio-header--hub">
+    <div class="studio-header__inner">
+      <div class="studio-brand">
+        <div class="studio-brand__mark">M</div>
+        <div>
+          <p class="studio-brand__eyebrow">Muestra Studio</p>
+          <h1 class="studio-brand__title">Personalizar juegos</h1>
+        </div>
+      </div>
+      <div class="studio-header__actions">
+        <a href="{% url 'home' %}" class="studio-btn studio-btn--ghost">Volver a juegos</a>
+      </div>
+    </div>
+  </header>
+
+  <main class="studio-hub">
+    <section class="studio-hero">
+      <div>
+        <span class="studio-pill">Playtek-style editor</span>
+        <h2>Elegí un juego y abrí su estudio visual</h2>
+        <p>
+          Cambiá branding, textos, reglas y assets desde una interfaz propia de la plataforma,
+          con preview y guardado sin pasar por Django admin.
+        </p>
+      </div>
+    </section>
+
+    <section class="studio-games-grid" aria-label="Juegos personalizables">
+      {% for game in games %}
+      <article class="studio-game-card studio-game-card--{{ game.slug }}">
+        <div class="studio-game-card__cover">
+          {% if game.cover_image_url %}
+          <img src="{{ game.cover_image_url }}" alt="{{ game.name }}" />
+          {% else %}
+          <div class="studio-game-card__placeholder game-cover--{{ game.slug }}"></div>
+          {% endif %}
+          <div class="studio-game-card__glow"></div>
+        </div>
+
+        <div class="studio-game-card__body">
+          <div class="studio-game-card__topline">
+            <span class="studio-chip">{% if game.is_enabled %}Activo{% else %}Desactivado{% endif %}</span>
+            <span class="studio-chip studio-chip--soft">{{ game.slug }}</span>
+          </div>
+
+          <h3>{{ game.name }}</h3>
+          <p>{{ game.description|default:"Personalizá la experiencia visual y de gameplay." }}</p>
+
+          <div class="studio-game-card__actions">
+            <a href="{% url 'customizer_page' game.slug %}" class="studio-btn studio-btn--primary">Abrir estudio</a>
+            {% if game.is_enabled %}
+            <a href="{% url 'runner_page' game.slug %}" class="studio-btn studio-btn--ghost" target="_blank">Abrir juego</a>
+            {% endif %}
+          </div>
+        </div>
+      </article>
+      {% endfor %}
+    </section>
+  </main>
+</body>
+</html>

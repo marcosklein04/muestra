@@ -1,0 +1,1340 @@
+:root {
+  --ptk-bg: #080d17;
+  --ptk-bg-soft: #0d1320;
+  --ptk-panel: #0f1624;
+  --ptk-panel-alt: #111a2a;
+  --ptk-border: rgba(153, 181, 210, 0.16);
+  --ptk-border-strong: rgba(153, 181, 210, 0.28);
+  --ptk-text: #eef4ff;
+  --ptk-muted: rgba(238, 244, 255, 0.58);
+  --ptk-accent: #00f5e9;
+  --ptk-accent-soft: rgba(0, 245, 233, 0.16);
+  --ptk-accent-blue: #2d95d2;
+  --ptk-btn-text: #09121f;
+  --ptk-shadow: 0 18px 44px rgba(0, 0, 0, 0.28);
+  --ptk-radius: 14px;
+  --ptk-radius-lg: 18px;
+  --ptk-sidebar-width: 112px;
+  --ptk-content-gap: 18px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  min-height: 100%;
+}
+
+body.playtek-body {
+  font-family: Inter, Arial, sans-serif;
+  background: var(--ptk-bg);
+  color: var(--ptk-text);
+}
+
+body.studio-body {
+  font-family: Outfit, Inter, Arial, sans-serif;
+  background: #07101a;
+  color: var(--ptk-text);
+}
+
+.studio-bg {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 12% 8%, rgba(0, 245, 233, 0.14), transparent 24%),
+    radial-gradient(circle at 84% 18%, rgba(45, 149, 210, 0.12), transparent 26%),
+    linear-gradient(180deg, #07101a 0%, #09111b 100%);
+}
+
+.studio-header,
+.studio-hub {
+  position: relative;
+  z-index: 1;
+}
+
+.studio-header {
+  padding: 24px clamp(18px, 4vw, 40px) 0;
+}
+
+.studio-header__inner,
+.studio-hub {
+  max-width: 1320px;
+  margin: 0 auto;
+}
+
+.studio-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.studio-brand {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.studio-brand__mark {
+  width: 46px;
+  height: 46px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  font-size: 20px;
+  font-weight: 800;
+  color: #07101a;
+  background: linear-gradient(135deg, var(--ptk-accent), #69d7ff);
+  box-shadow: 0 18px 36px rgba(0, 245, 233, 0.18);
+}
+
+.studio-brand__eyebrow {
+  margin: 0;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ptk-muted);
+}
+
+.studio-brand__title {
+  margin: 4px 0 0;
+  font-size: clamp(28px, 4vw, 40px);
+  line-height: 1;
+}
+
+.studio-header__actions {
+  display: flex;
+  align-items: center;
+}
+
+.studio-hub {
+  padding: 28px clamp(18px, 4vw, 40px) 60px;
+}
+
+.studio-hero {
+  padding: 22px 24px;
+  border-radius: 24px;
+  border: 1px solid rgba(0, 245, 233, 0.12);
+  background:
+    radial-gradient(circle at top right, rgba(0, 245, 233, 0.08), transparent 24%),
+    linear-gradient(180deg, rgba(12, 20, 32, 0.96), rgba(10, 16, 26, 0.96));
+  box-shadow: var(--ptk-shadow);
+}
+
+.studio-pill {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 0 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--ptk-accent);
+  background: rgba(0, 245, 233, 0.1);
+}
+
+.studio-hero h2 {
+  margin: 12px 0 0;
+  font-size: clamp(28px, 4vw, 48px);
+  line-height: 0.98;
+}
+
+.studio-hero p {
+  max-width: 720px;
+  margin: 12px 0 0;
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--ptk-muted);
+}
+
+.studio-games-grid {
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 360px), 1fr));
+  gap: 20px;
+}
+
+.studio-game-card {
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid rgba(0, 245, 233, 0.12);
+  background: linear-gradient(180deg, rgba(15, 22, 36, 0.95), rgba(11, 17, 27, 0.95));
+  box-shadow: var(--ptk-shadow);
+}
+
+.studio-game-card__cover {
+  position: relative;
+  height: 220px;
+  overflow: hidden;
+  background: linear-gradient(135deg, #0b1624, #102133);
+}
+
+.studio-game-card__cover img,
+.studio-game-card__placeholder {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+}
+
+.studio-game-card__glow {
+  position: absolute;
+  inset: auto 20px 18px;
+  height: 90px;
+  border-radius: 999px;
+  background: radial-gradient(circle, rgba(0, 245, 233, 0.2), transparent 72%);
+  filter: blur(18px);
+}
+
+.studio-game-card__body {
+  padding: 20px;
+}
+
+.studio-game-card__topline,
+.studio-game-card__actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.studio-chip {
+  display: inline-flex;
+  align-items: center;
+  min-height: 24px;
+  padding: 0 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 700;
+  color: #08111b;
+  background: linear-gradient(135deg, var(--ptk-accent), #69d7ff);
+}
+
+.studio-chip--soft {
+  color: rgba(238, 244, 255, 0.84);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.studio-game-card h3 {
+  margin: 14px 0 0;
+  font-size: 24px;
+}
+
+.studio-game-card p {
+  margin: 10px 0 0;
+  color: var(--ptk-muted);
+  line-height: 1.6;
+}
+
+.studio-game-card__actions {
+  margin-top: 18px;
+}
+
+.studio-btn {
+  min-height: 40px;
+  padding: 0 16px;
+  border-radius: 999px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.studio-btn--primary {
+  color: #08111b;
+  background: linear-gradient(135deg, var(--ptk-accent), #69d7ff);
+}
+
+.studio-btn--ghost {
+  color: rgba(238, 244, 255, 0.84);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.playtek-app {
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: var(--ptk-sidebar-width) minmax(0, 1fr);
+}
+
+.playtek-sidebar {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  padding: 18px 10px 14px;
+  background: linear-gradient(180deg, #07111d, #090f18 100%);
+  border-right: 1px solid rgba(0, 245, 233, 0.1);
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.playtek-sidebar__brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 700;
+}
+
+.playtek-sidebar__logo {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+.playtek-sidebar__nav,
+.playtek-sidebar__section {
+  display: grid;
+  gap: 4px;
+}
+
+.playtek-sidebar__section-title {
+  margin: 0 0 6px;
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--ptk-muted);
+}
+
+.playtek-sidebar__link,
+.playtek-sidebar__sublink {
+  text-decoration: none;
+  color: rgba(238, 244, 255, 0.72);
+}
+
+.playtek-sidebar__link {
+  min-height: 34px;
+  border-radius: 8px;
+  padding: 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+}
+
+.playtek-sidebar__link.is-active {
+  background: rgba(0, 245, 233, 0.08);
+  color: var(--ptk-text);
+  border: 1px solid rgba(0, 245, 233, 0.18);
+}
+
+.playtek-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(238, 244, 255, 0.38);
+  flex: 0 0 auto;
+}
+
+.playtek-badge {
+  margin-left: auto;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: rgba(0, 245, 233, 0.14);
+  color: var(--ptk-accent);
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.playtek-sidebar__sublink {
+  font-size: 12px;
+  padding: 4px 0;
+}
+
+.playtek-sidebar__footer {
+  margin-top: auto;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.playtek-sidebar__footer p {
+  margin: 0 0 10px;
+  font-size: 10px;
+  color: var(--ptk-muted);
+  line-height: 1.5;
+}
+
+.playtek-ghost-button {
+  width: 100%;
+  min-height: 32px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--ptk-text);
+  font: inherit;
+  font-size: 11px;
+  cursor: pointer;
+}
+
+.playtek-main {
+  padding: 14px 16px 88px;
+}
+
+.playtek-topbar {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  margin-bottom: 18px;
+}
+
+.playtek-topbar h1 {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.playtek-topbar p {
+  margin: 4px 0 0;
+  font-size: 11px;
+  color: var(--ptk-muted);
+}
+
+.playtek-topbar__button {
+  min-height: 32px;
+  border-radius: 8px;
+  border: 1px solid var(--ptk-border-strong);
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--ptk-text);
+  font: inherit;
+  font-size: 11px;
+  padding: 0 12px;
+  cursor: pointer;
+}
+
+.playtek-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 608px;
+  gap: 16px;
+  align-items: start;
+}
+
+.playtek-editor {
+  min-width: 0;
+}
+
+.playtek-form {
+  display: grid;
+  gap: 14px;
+}
+
+.playtek-card,
+.playtek-preview__stage {
+  border-radius: 10px;
+  border: 1px solid rgba(38, 57, 84, 0.9);
+  background: linear-gradient(180deg, #0d1421, #0b111d);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
+}
+
+.playtek-card {
+  padding: 18px;
+}
+
+.playtek-card__header {
+  margin-bottom: 14px;
+}
+
+.playtek-card__header h2 {
+  margin: 0;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+.playtek-card__header p {
+  margin: 4px 0 0;
+  font-size: 10px;
+  line-height: 1.5;
+  color: var(--ptk-muted);
+}
+
+.playtek-color-grid,
+.playtek-fields-grid,
+.playtek-asset-grid {
+  display: grid;
+  gap: 12px;
+}
+
+.playtek-color-grid {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  margin-bottom: 12px;
+}
+
+.playtek-color-field,
+.playtek-field,
+.playtek-toggle-field,
+.playtek-asset-card {
+  min-width: 0;
+}
+
+.playtek-field__label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 10px;
+  color: rgba(238, 244, 255, 0.76);
+}
+
+.playtek-color-field__control,
+.playtek-field input,
+.playtek-field textarea,
+.playtek-field select {
+  width: 100%;
+}
+
+.playtek-color-field__control {
+  min-height: 38px;
+  border-radius: 8px;
+  border: 1px solid rgba(214, 230, 255, 0.55);
+  background: rgba(13, 20, 33, 0.92);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 10px;
+}
+
+.playtek-color-swatch {
+  width: 22px;
+  height: 22px;
+  border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: #0a1320;
+  cursor: pointer;
+  flex: 0 0 auto;
+}
+
+.playtek-color-native {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.playtek-color-field__control input[type="text"],
+.playtek-field input,
+.playtek-field textarea,
+.playtek-field select {
+  border: 1px solid rgba(214, 230, 255, 0.55);
+  border-radius: 8px;
+  background: rgba(13, 20, 33, 0.92);
+  color: var(--ptk-text);
+  font: inherit;
+  font-size: 11px;
+}
+
+.playtek-color-field__control input[type="text"] {
+  flex: 1 1 auto;
+  border: 0;
+  background: transparent;
+  height: 34px;
+  padding: 0;
+}
+
+.playtek-field input,
+.playtek-field select {
+  min-height: 38px;
+  padding: 0 12px;
+}
+
+.playtek-field textarea {
+  min-height: 38px;
+  padding: 10px 12px;
+  resize: vertical;
+}
+
+.playtek-fields-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.playtek-fields-grid--rules {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.playtek-field--full {
+  grid-column: span 2;
+}
+
+.playtek-asset-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.playtek-asset-card {
+  border-radius: 10px;
+  border: 1px solid rgba(214, 230, 255, 0.28);
+  padding: 12px;
+  background: rgba(12, 19, 31, 0.78);
+}
+
+.playtek-asset-card--wide {
+  padding: 14px;
+}
+
+.playtek-asset-card__header h3 {
+  margin: 0;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.playtek-asset-card__header p {
+  margin: 4px 0 8px;
+  font-size: 10px;
+  line-height: 1.4;
+  color: var(--ptk-muted);
+}
+
+.playtek-upload-button {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 30px;
+  padding: 0 10px;
+  border-radius: 7px;
+  border: 1px solid rgba(214, 230, 255, 0.55);
+  background: rgba(255, 255, 255, 0.04);
+  color: var(--ptk-text);
+  font-size: 10px;
+  cursor: pointer;
+  overflow: hidden;
+}
+
+.playtek-upload-button input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.playtek-asset-preview {
+  margin-top: 10px;
+  height: 104px;
+  border-radius: 8px;
+  border: 1px solid rgba(214, 230, 255, 0.3);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--ptk-muted);
+  font-size: 10px;
+}
+
+.playtek-asset-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.playtek-link-button {
+  margin-top: 8px;
+  border: 0;
+  background: transparent;
+  color: var(--ptk-muted);
+  font-size: 10px;
+  padding: 0;
+  cursor: pointer;
+}
+
+.playtek-action-chip,
+.playtek-mini-button {
+  min-height: 30px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 0;
+  font: inherit;
+  font-size: 10px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.playtek-mini-button {
+  color: rgba(238, 244, 255, 0.52);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.playtek-action-chip--ghost {
+  color: rgba(238, 244, 255, 0.82);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.playtek-action-chip--primary {
+  color: #07111b;
+  background: linear-gradient(135deg, var(--ptk-accent), #69d7ff);
+}
+
+.playtek-card--trivia-editor {
+  gap: 16px;
+}
+
+.playtek-trivia-toolbar,
+.playtek-trivia-toolbar__actions,
+.playtek-trivia-question__header,
+.playtek-trivia-answers__header,
+.playtek-trivia-answer__top,
+.playtek-trivia-answer__controls {
+  display: flex;
+  align-items: center;
+}
+
+.playtek-trivia-toolbar,
+.playtek-trivia-question__header,
+.playtek-trivia-answers__header,
+.playtek-trivia-answer__top {
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.playtek-trivia-toolbar {
+  margin-bottom: 12px;
+}
+
+.playtek-trivia-toolbar__actions {
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.playtek-trivia-note {
+  margin: 0 0 14px;
+  font-size: 10px;
+  line-height: 1.5;
+  color: var(--ptk-muted);
+}
+
+.playtek-trivia-questions {
+  display: grid;
+  gap: 14px;
+}
+
+.playtek-trivia-question {
+  border-radius: 12px;
+  border: 1px solid rgba(214, 230, 255, 0.18);
+  background: rgba(12, 18, 30, 0.72);
+  padding: 14px;
+}
+
+.playtek-trivia-question__header h3,
+.playtek-trivia-answers__header h4 {
+  margin: 6px 0 0;
+  font-size: 12px;
+}
+
+.playtek-trivia-question__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 180px;
+  gap: 12px;
+  align-items: start;
+  margin-top: 14px;
+}
+
+.playtek-trivia-question__asset {
+  margin-top: 12px;
+}
+
+.playtek-trivia-answers {
+  margin-top: 14px;
+  display: grid;
+  gap: 12px;
+}
+
+.playtek-trivia-answer {
+  border-radius: 10px;
+  border: 1px solid rgba(214, 230, 255, 0.16);
+  background: rgba(9, 15, 25, 0.72);
+  padding: 12px;
+}
+
+.playtek-trivia-answer__top strong {
+  font-size: 11px;
+}
+
+.playtek-trivia-answer__controls {
+  gap: 10px;
+}
+
+.playtek-answer-correct {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  color: rgba(238, 244, 255, 0.82);
+}
+
+.playtek-answer-correct input {
+  accent-color: var(--ptk-accent);
+}
+
+.playtek-trivia-answer__body {
+  margin-top: 10px;
+}
+
+.playtek-answer-media {
+  display: none;
+  margin-top: 10px;
+}
+
+.playtek-trivia-question.is-image-mode .playtek-answer-media {
+  display: block;
+}
+
+.playtek-asset-preview--question {
+  height: 120px;
+}
+
+.playtek-asset-preview--answer {
+  height: 82px;
+}
+
+.playtek-toggle-field {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  min-height: 54px;
+  padding: 0 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(214, 230, 255, 0.55);
+  background: rgba(13, 20, 33, 0.92);
+}
+
+.playtek-toggle-field .playtek-field__label {
+  margin: 0;
+}
+
+.playtek-toggle-field--wide {
+  grid-column: span 2;
+}
+
+.playtek-toggle {
+  position: relative;
+  width: 46px;
+  height: 24px;
+  flex: 0 0 auto;
+}
+
+.playtek-toggle input {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+}
+
+.playtek-toggle__track {
+  position: absolute;
+  inset: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.playtek-toggle__track::after {
+  content: "";
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 50%;
+  background: white;
+  transition: transform 0.16s ease;
+}
+
+.playtek-toggle input:checked + .playtek-toggle__track {
+  background: rgba(0, 245, 233, 0.24);
+}
+
+.playtek-toggle input:checked + .playtek-toggle__track::after {
+  transform: translateX(22px);
+  background: var(--ptk-accent);
+}
+
+.playtek-preview {
+  position: sticky;
+  top: 14px;
+}
+
+.playtek-preview__card {
+  border-radius: 10px;
+  border: 1px solid rgba(38, 57, 84, 0.9);
+  background: linear-gradient(180deg, #0d1421, #0b111d);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.02);
+  overflow: hidden;
+}
+
+.playtek-preview__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 14px 0;
+}
+
+.playtek-preview__tag,
+.playtek-preview__status {
+  display: inline-flex;
+  align-items: center;
+  min-height: 20px;
+  padding: 0 8px;
+  border-radius: 999px;
+  font-size: 9px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.playtek-preview__tag {
+  color: rgba(238, 244, 255, 0.9);
+  background: rgba(0, 245, 233, 0.08);
+}
+
+.playtek-preview__status {
+  color: rgba(238, 244, 255, 0.68);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.playtek-preview__header h2 {
+  margin: 8px 0 0;
+  font-size: 12px;
+}
+
+.playtek-preview__header p {
+  margin: 4px 0 0;
+  font-size: 10px;
+  color: var(--ptk-muted);
+}
+
+.playtek-preview__stage {
+  position: relative;
+  min-height: 520px;
+  margin-top: 10px;
+  padding: 22px;
+  border: 0;
+  border-top: 1px solid rgba(38, 57, 84, 0.7);
+  border-radius: 0;
+  background:
+    radial-gradient(circle at top left, rgba(0, 245, 233, 0.06), transparent 28%),
+    linear-gradient(180deg, #0a1220, #09111b);
+  overflow: hidden;
+}
+
+.playtek-preview__stage--puzzle-mundial {
+  background:
+    radial-gradient(circle at 18% 20%, rgba(0, 245, 233, 0.08), transparent 24%),
+    linear-gradient(180deg, #0a1220, #09111b);
+}
+
+.playtek-preview__stage--trivia-mundial-fotos {
+  background:
+    radial-gradient(circle at 18% 20%, rgba(138, 216, 255, 0.08), transparent 24%),
+    linear-gradient(180deg, #09111d, #07111b);
+}
+
+.playtek-preview__stage--el-del-arquero {
+  background:
+    radial-gradient(circle at 18% 20%, rgba(247, 201, 72, 0.08), transparent 24%),
+    linear-gradient(180deg, #09111d, #07111b);
+}
+
+.playtek-preview__stage--trivia-mundial-fotos .playtek-phone {
+  width: 186px;
+  padding-top: 14px;
+}
+
+.playtek-preview__watermark {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: 48px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 800;
+  pointer-events: none;
+}
+
+.playtek-phone {
+  width: 178px;
+  margin: 38px auto 0;
+  padding: 28px 12px 14px;
+  border-radius: 22px;
+  border: 1px solid rgba(214, 230, 255, 0.55);
+  background: rgba(12, 20, 32, 0.96);
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.04) inset;
+}
+
+.playtek-phone__screen {
+  border-radius: 18px;
+  border: 1px solid rgba(214, 230, 255, 0.55);
+  background: linear-gradient(180deg, rgba(13, 20, 33, 1), rgba(11, 17, 27, 1));
+  padding: 14px 12px 12px;
+  text-align: center;
+}
+
+.playtek-phone__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 18px;
+  padding: 0 10px;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--ptk-accent), #2dd6ff);
+  color: var(--ptk-btn-text);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.playtek-phone__logo {
+  width: 52px;
+  height: 32px;
+  object-fit: contain;
+  display: block;
+  margin: 8px auto 0;
+}
+
+.playtek-phone h3 {
+  margin: 10px 0 0;
+  font-size: 12px;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.playtek-phone p {
+  margin: 8px 0 0;
+  font-size: 9px;
+  line-height: 1.4;
+  color: var(--ptk-muted);
+}
+
+.playtek-phone__media {
+  margin-top: 12px;
+  min-height: 92px;
+  border-radius: 10px;
+  border: 1px solid rgba(214, 230, 255, 0.26);
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background: rgba(255, 255, 255, 0.03);
+}
+
+.playtek-phone__hero {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.playtek-phone__hero-fallback {
+  font-size: 9px;
+  color: var(--ptk-muted);
+}
+
+.playtek-phone__chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.playtek-phone__chip {
+  min-height: 18px;
+  padding: 0 8px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: 8px;
+  display: inline-flex;
+  align-items: center;
+}
+
+.playtek-phone__button {
+  margin-top: 12px;
+  width: 100%;
+  min-height: 26px;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(135deg, var(--ptk-accent), #2dd6ff);
+  color: var(--ptk-btn-text);
+  font: inherit;
+  font-size: 10px;
+  font-weight: 700;
+}
+
+.playtek-phone__support.hidden,
+.hidden {
+  display: none !important;
+}
+
+.playtek-trivia-preview {
+  display: grid;
+  gap: 10px;
+}
+
+.playtek-trivia-preview__stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.playtek-trivia-stat {
+  border-radius: 10px;
+  border: 1px solid rgba(214, 230, 255, 0.3);
+  background: rgba(10, 16, 28, 0.82);
+  padding: 8px;
+}
+
+.playtek-trivia-stat--wide {
+  grid-column: span 2;
+}
+
+.playtek-trivia-stat span {
+  display: block;
+  font-size: 7px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(238, 244, 255, 0.54);
+}
+
+.playtek-trivia-stat strong {
+  display: block;
+  margin-top: 4px;
+  font-size: 11px;
+}
+
+.playtek-trivia-stat__bar {
+  margin-top: 8px;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.playtek-trivia-stat__fill {
+  width: 68%;
+  height: 100%;
+  border-radius: inherit;
+  background: linear-gradient(90deg, var(--ptk-accent), #69d7ff);
+}
+
+.playtek-trivia-preview__card {
+  border-radius: 12px;
+  border: 1px solid rgba(214, 230, 255, 0.34);
+  background: rgba(10, 16, 28, 0.88);
+  padding: 10px;
+}
+
+.playtek-trivia-preview__media {
+  margin-top: 10px;
+  min-height: 88px;
+  border-radius: 10px;
+  border: 1px solid rgba(214, 230, 255, 0.2);
+  background: rgba(255, 255, 255, 0.03);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+.playtek-trivia-preview__card h3 {
+  margin: 10px 0 0;
+  font-size: 11px;
+  line-height: 1.35;
+  text-transform: none;
+  text-align: left;
+}
+
+.playtek-trivia-preview__answers {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.playtek-trivia-preview__answer {
+  min-height: 42px;
+  border-radius: 10px;
+  border: 1px solid rgba(105, 215, 255, 0.35);
+  background: rgba(22, 50, 74, 0.88);
+  color: var(--ptk-text);
+  padding: 8px;
+  text-align: left;
+}
+
+.playtek-trivia-preview__answer span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  margin-bottom: 6px;
+  font-size: 8px;
+  font-weight: 700;
+  color: #07111b;
+  background: rgba(244, 251, 255, 0.92);
+}
+
+.playtek-trivia-preview__answer strong {
+  display: block;
+  font-size: 9px;
+  line-height: 1.3;
+}
+
+.playtek-actionbar {
+  position: fixed;
+  right: 18px;
+  bottom: 18px;
+  z-index: 30;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.playtek-actionbar__button {
+  min-height: 28px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 0;
+  font: inherit;
+  font-size: 10px;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.playtek-actionbar__button--ghost {
+  color: rgba(238, 244, 255, 0.84);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.playtek-actionbar__button--primary {
+  color: var(--ptk-btn-text);
+  background: linear-gradient(135deg, var(--ptk-accent), #22d1ff);
+}
+
+.playtek-actionbar__button[disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.playtek-statusbar {
+  position: fixed;
+  left: calc(var(--ptk-sidebar-width) + 18px);
+  bottom: 22px;
+  z-index: 25;
+}
+
+.playtek-statusbar p {
+  margin: 0;
+  font-size: 11px;
+  color: var(--ptk-muted);
+}
+
+.playtek-color-field__control input[type="text"]:focus,
+.playtek-field input:focus,
+.playtek-field textarea:focus,
+.playtek-field select:focus,
+.playtek-topbar__button:focus,
+.playtek-actionbar__button:focus,
+.playtek-upload-button:focus-within {
+  outline: 2px solid rgba(0, 245, 233, 0.28);
+  outline-offset: 1px;
+}
+
+@media (max-width: 1480px) {
+  .playtek-workspace {
+    grid-template-columns: minmax(0, 1fr) 430px;
+  }
+}
+
+@media (max-width: 1220px) {
+  .playtek-app {
+    grid-template-columns: 1fr;
+  }
+
+  .playtek-sidebar {
+    position: relative;
+    height: auto;
+    border-right: 0;
+    border-bottom: 1px solid rgba(0, 245, 233, 0.1);
+  }
+
+  .playtek-workspace {
+    grid-template-columns: 1fr;
+  }
+
+  .playtek-preview {
+    position: static;
+  }
+
+  .playtek-statusbar {
+    left: 18px;
+  }
+}
+
+@media (max-width: 780px) {
+  .studio-header__inner,
+  .studio-game-card__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .playtek-main {
+    padding: 14px 12px 110px;
+  }
+
+  .playtek-topbar,
+  .playtek-preview__header {
+    flex-direction: column;
+  }
+
+  .playtek-color-grid,
+  .playtek-fields-grid,
+  .playtek-asset-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .playtek-trivia-toolbar,
+  .playtek-trivia-question__grid,
+  .playtek-trivia-question__header,
+  .playtek-trivia-answers__header,
+  .playtek-trivia-answer__top {
+    grid-template-columns: 1fr;
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .playtek-trivia-preview__answers,
+  .playtek-trivia-preview__stats {
+    grid-template-columns: 1fr;
+  }
+
+  .playtek-trivia-stat--wide {
+    grid-column: span 1;
+  }
+
+  .playtek-field--full {
+    grid-column: span 1;
+  }
+
+  .playtek-toggle-field--wide {
+    grid-column: span 1;
+  }
+
+  .playtek-actionbar {
+    left: 12px;
+    right: 12px;
+    flex-wrap: wrap;
+  }
+
+  .playtek-actionbar__button {
+    flex: 1 1 calc(50% - 4px);
+  }
+}

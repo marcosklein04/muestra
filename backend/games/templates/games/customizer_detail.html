@@ -1,0 +1,567 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <meta name="theme-color" content="#080d17" />
+  <title>Playtek - {{ game.name }}</title>
+  <link rel="icon" type="image/png" href="{% static 'games/img/favicon.png' %}" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Oswald:wght@400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="{% static 'games/css/customizer.css' %}" />
+</head>
+<body class="playtek-body">
+  <div
+    id="customizerApp"
+    class="playtek-app"
+    data-game-slug="{{ game.slug }}"
+    data-save-url="{% url 'api_guardar_personalizacion' game.slug %}"
+    data-preview-url="{% url 'runner_page' game.slug %}"
+  >
+    <aside class="playtek-sidebar">
+      <div class="playtek-sidebar__brand">
+        <img src="{% static 'games/img/favicon.png' %}" alt="Playtek" class="playtek-sidebar__logo" />
+        <span>Playtek</span>
+      </div>
+
+      <nav class="playtek-sidebar__nav">
+        <a href="#" class="playtek-sidebar__link">
+          <span class="playtek-dot"></span>
+          <span>Inicio</span>
+        </a>
+        <a href="#" class="playtek-sidebar__link">
+          <span class="playtek-dot"></span>
+          <span>Catálogo</span>
+        </a>
+        <a href="{% url 'customizer_home' %}" class="playtek-sidebar__link is-active">
+          <span class="playtek-dot"></span>
+          <span>Mis Juegos</span>
+          <span class="playtek-badge">03</span>
+        </a>
+        <a href="#" class="playtek-sidebar__link">
+          <span class="playtek-dot"></span>
+          <span>Configuración</span>
+        </a>
+        <a href="#" class="playtek-sidebar__link">
+          <span class="playtek-dot"></span>
+          <span>Estudio</span>
+        </a>
+      </nav>
+
+      <div class="playtek-sidebar__section">
+        <p class="playtek-sidebar__section-title">Supervisión</p>
+        <a href="#" class="playtek-sidebar__sublink">Resumen</a>
+        <a href="#" class="playtek-sidebar__sublink">Solicitudes</a>
+        <a href="#" class="playtek-sidebar__sublink">Clientes</a>
+        <a href="#" class="playtek-sidebar__sublink">Contratos</a>
+      </div>
+
+      <div class="playtek-sidebar__footer">
+        <p>marcosklein15@gmail.com</p>
+        <button type="button" class="playtek-ghost-button">Cerrar sesión</button>
+      </div>
+    </aside>
+
+    <main class="playtek-main">
+      <header class="playtek-topbar">
+        <div>
+          <h1>Personalizar {{ game.name }}</h1>
+          <p>Contrato #{{ game.id }} &gt; {{ game.slug }}</p>
+        </div>
+        <div class="playtek-topbar__actions">
+          <button type="button" id="paletteButton" class="playtek-topbar__button">Aplicar paleta Playtek</button>
+        </div>
+      </header>
+
+      <div class="playtek-workspace">
+        <section class="playtek-editor">
+          <form
+            id="customizerForm"
+            class="playtek-form"
+            action="{% url 'api_guardar_personalizacion' game.slug %}"
+            method="post"
+            enctype="multipart/form-data"
+          >
+            {% csrf_token %}
+
+            {% for card in cards %}
+            <section class="playtek-card" id="card-{{ card.key }}">
+              <div class="playtek-card__header">
+                <h2>{{ card.title }}</h2>
+                <p>{{ card.description }}</p>
+              </div>
+
+              {% if card.color_fields %}
+              <div class="playtek-color-grid playtek-color-grid--{{ card.key }}">
+                {% for field in card.color_fields %}
+                <label class="playtek-color-field">
+                  <span class="playtek-field__label">{{ field.label }}</span>
+                  <div class="playtek-color-field__control">
+                    <button
+                      type="button"
+                      class="playtek-color-swatch"
+                      data-color-trigger="{{ field.name }}"
+                      aria-label="Elegir {{ field.label }}"
+                    ></button>
+                    <input
+                      type="color"
+                      class="playtek-color-native"
+                      data-color-native="{{ field.name }}"
+                      value="#00e5d6"
+                    />
+                    <input
+                      type="text"
+                      name="{{ field.name }}"
+                      value="{{ field.value|default_if_none:'' }}"
+                      data-config-field="true"
+                      data-section="{{ field.section }}"
+                      data-key="{{ field.key }}"
+                      data-color-text="{{ field.name }}"
+                    />
+                  </div>
+                </label>
+                {% endfor %}
+              </div>
+              {% endif %}
+
+              {% if card.asset_fields %}
+              <div class="playtek-asset-grid playtek-asset-grid--{{ card.key }}">
+                {% for field in card.asset_fields %}
+                <article class="playtek-asset-card">
+                  <div class="playtek-asset-card__header">
+                    <h3>{{ field.label }}</h3>
+                    <p>{{ field.help_text|default:"Subí un archivo para reemplazar este asset del juego." }}</p>
+                  </div>
+
+                  <input
+                    type="hidden"
+                    name="{{ field.name }}"
+                    value="{{ field.value|default_if_none:'' }}"
+                    data-config-field="true"
+                    data-section="{{ field.section }}"
+                    data-key="{{ field.key }}"
+                    data-asset-value="{{ field.name }}"
+                  />
+                  <input type="hidden" name="{{ field.name }}__clear" value="0" data-asset-clear="{{ field.name }}" />
+
+                  <label class="playtek-upload-button">
+                    <span>Seleccionar archivo</span>
+                    <input type="file" name="{{ field.name }}__file" accept="image/*" data-asset-input="{{ field.name }}" />
+                  </label>
+
+                  <div class="playtek-asset-preview" data-asset-preview="{{ field.name }}">
+                    {% if field.value %}
+                    <img src="{{ field.value }}" alt="{{ field.label }}" />
+                    {% else %}
+                    <span>Sin archivo cargado.</span>
+                    {% endif %}
+                  </div>
+
+                  <button type="button" class="playtek-link-button" data-asset-clear-button="{{ field.name }}">Eliminar</button>
+                </article>
+                {% endfor %}
+              </div>
+              {% endif %}
+
+              {% if card.fields %}
+              <div class="playtek-fields-grid playtek-fields-grid--{{ card.key }}">
+                {% for field in card.fields %}
+                {% if field.kind == "textarea" %}
+                <label class="playtek-field playtek-field--full">
+                  <span class="playtek-field__label">{{ field.label }}</span>
+                  <textarea
+                    name="{{ field.name }}"
+                    rows="3"
+                    data-config-field="true"
+                    data-section="{{ field.section }}"
+                    data-key="{{ field.key }}"
+                  >{{ field.value|default_if_none:"" }}</textarea>
+                </label>
+                {% elif field.kind == "checkbox" %}
+                <label class="playtek-toggle-field {% if field.name == 'rules__show_progress' %}playtek-toggle-field--wide{% endif %}">
+                  <span class="playtek-field__label">{{ field.label }}</span>
+                  <span class="playtek-toggle">
+                    <input
+                      type="checkbox"
+                      name="{{ field.name }}"
+                      data-config-field="true"
+                      data-section="{{ field.section }}"
+                      data-key="{{ field.key }}"
+                      {% if field.value %}checked{% endif %}
+                    />
+                    <span class="playtek-toggle__track"></span>
+                  </span>
+                </label>
+                {% elif field.kind == "select" %}
+                <label class="playtek-field">
+                  <span class="playtek-field__label">{{ field.label }}</span>
+                  <select
+                    name="{{ field.name }}"
+                    data-config-field="true"
+                    data-section="{{ field.section }}"
+                    data-key="{{ field.key }}"
+                  >
+                    {% for value, label in field.choices %}
+                    <option value="{{ value }}" {% if value == field.value %}selected{% endif %}>{{ label }}</option>
+                    {% endfor %}
+                  </select>
+                </label>
+                {% else %}
+                <label class="playtek-field {% if field.kind == 'number' %}playtek-field--compact{% endif %}">
+                  <span class="playtek-field__label">{{ field.label }}</span>
+                  <input
+                    type="{% if field.kind == 'number' %}number{% else %}text{% endif %}"
+                    name="{{ field.name }}"
+                    value="{{ field.value|default_if_none:'' }}"
+                    {% if field.kind == "number" %}
+                    min="{{ field.min_value|default_if_none:'' }}"
+                    max="{{ field.max_value|default_if_none:'' }}"
+                    step="{{ field.step }}"
+                    {% endif %}
+                    data-config-field="true"
+                    data-section="{{ field.section }}"
+                    data-key="{{ field.key }}"
+                  />
+                </label>
+                {% endif %}
+                {% endfor %}
+              </div>
+              {% endif %}
+            </section>
+            {% endfor %}
+
+            {% if trivia_editor %}
+            <section class="playtek-card playtek-card--trivia-editor" id="card-trivia-questions">
+              <div class="playtek-card__header">
+                <h2>Preguntas visuales</h2>
+                <p>Cargá preguntas, definí el tipo de respuesta y prepará el banco visual que usa la trivia durante la partida.</p>
+              </div>
+
+              <div class="playtek-trivia-toolbar">
+                <label class="playtek-field playtek-field--compact">
+                  <span class="playtek-field__label">Cantidad de preguntas</span>
+                  <input
+                    id="triviaQuestionCount"
+                    type="number"
+                    name="trivia_question_count"
+                    value="{{ trivia_editor.count }}"
+                    min="1"
+                    max="{{ trivia_editor.max_count }}"
+                    data-trivia-editor-field="true"
+                  />
+                </label>
+
+                <div class="playtek-trivia-toolbar__actions">
+                  <button type="button" class="playtek-action-chip playtek-action-chip--ghost" data-save-trigger="questions">Guardar borradores</button>
+                  <button type="button" class="playtek-action-chip playtek-action-chip--primary" data-save-trigger="questions">Guardar preguntas de la trivia</button>
+                </div>
+              </div>
+
+              <p class="playtek-trivia-note">El bloque visible cambia según la cantidad elegida. Podés usar respuestas de texto o cargar respuestas por imagen.</p>
+
+              <div class="playtek-trivia-questions">
+                {% for question in trivia_editor.questions %}
+                <article
+                  class="playtek-trivia-question {% if not question.visible %}hidden{% endif %}"
+                  data-trivia-question="true"
+                  data-trivia-question-index="{{ question.index }}"
+                >
+                  <div class="playtek-trivia-question__header">
+                    <div>
+                      <span class="playtek-preview__tag">Pregunta {{ forloop.counter }}</span>
+                      <h3>Pregunta {{ forloop.counter }}</h3>
+                    </div>
+                    <button type="button" class="playtek-mini-button" disabled>Vista previa</button>
+                  </div>
+
+                  <div class="playtek-trivia-question__grid">
+                    <label class="playtek-field playtek-field--full">
+                      <span class="playtek-field__label">Enunciado</span>
+                      <textarea
+                        name="trivia_questions__{{ question.index }}__prompt"
+                        rows="3"
+                        data-trivia-editor-field="true"
+                        data-trivia-prompt="true"
+                      >{{ question.prompt }}</textarea>
+                    </label>
+
+                    <label class="playtek-field playtek-field--compact">
+                      <span class="playtek-field__label">Tipo de respuesta</span>
+                      <select
+                        name="trivia_questions__{{ question.index }}__response_type"
+                        data-trivia-editor-field="true"
+                        data-trivia-response-type="true"
+                      >
+                        <option value="text" {% if question.response_type == 'text' %}selected{% endif %}>Texto</option>
+                        <option value="image" {% if question.response_type == 'image' %}selected{% endif %}>Imagen</option>
+                      </select>
+                    </label>
+                  </div>
+
+                  <div class="playtek-trivia-question__asset">
+                    <article class="playtek-asset-card playtek-asset-card--wide">
+                      <div class="playtek-asset-card__header">
+                        <h3>Imagen principal de la pregunta</h3>
+                        <p>Opcional. Se usa en el visual central de la pregunta.</p>
+                      </div>
+
+                      <input
+                        type="hidden"
+                        name="trivia_questions__{{ question.index }}__question_image_url"
+                        value="{{ question.question_image_url }}"
+                        data-asset-value="trivia_questions__{{ question.index }}__question_image_url"
+                      />
+                      <input
+                        type="hidden"
+                        name="trivia_questions__{{ question.index }}__question_image_url__clear"
+                        value="0"
+                        data-asset-clear="trivia_questions__{{ question.index }}__question_image_url"
+                      />
+
+                      <label class="playtek-upload-button">
+                        <span>Seleccionar archivo</span>
+                        <input
+                          type="file"
+                          name="trivia_questions__{{ question.index }}__question_image_url__file"
+                          accept="image/*"
+                          data-asset-input="trivia_questions__{{ question.index }}__question_image_url"
+                        />
+                      </label>
+
+                      <div class="playtek-asset-preview playtek-asset-preview--question" data-asset-preview="trivia_questions__{{ question.index }}__question_image_url">
+                        {% if question.question_image_url %}
+                        <img src="{{ question.question_image_url }}" alt="Pregunta {{ forloop.counter }}" />
+                        {% else %}
+                        <span>Sin imagen cargada.</span>
+                        {% endif %}
+                      </div>
+
+                      <button type="button" class="playtek-link-button" data-asset-clear-button="trivia_questions__{{ question.index }}__question_image_url">Quitar imagen</button>
+                    </article>
+                  </div>
+
+                  <div class="playtek-trivia-answers" data-trivia-answer-group="true">
+                    <div class="playtek-trivia-answers__header">
+                      <h4>Respuestas</h4>
+                      <button type="button" class="playtek-mini-button" disabled>Agregar respuesta</button>
+                    </div>
+
+                    {% for answer in question.answers %}
+                    <div
+                      class="playtek-trivia-answer"
+                      data-trivia-answer-row="true"
+                      data-answer-index="{{ answer.index }}"
+                      data-answer-image-field="trivia_questions__{{ question.index }}__answers__{{ answer.index }}__image_url"
+                    >
+                      <div class="playtek-trivia-answer__top">
+                        <strong>Respuesta {{ forloop.counter }}</strong>
+                        <div class="playtek-trivia-answer__controls">
+                          <label class="playtek-answer-correct">
+                            <input
+                              type="radio"
+                              name="trivia_questions__{{ question.index }}__correct_answer"
+                              value="{{ answer.index }}"
+                              {% if question.correct_answer == answer.index %}checked{% endif %}
+                              data-trivia-editor-field="true"
+                            />
+                            <span>Correcta</span>
+                          </label>
+                          <button type="button" class="playtek-mini-button" data-trivia-answer-clear="true">Quitar</button>
+                        </div>
+                      </div>
+
+                      <div class="playtek-trivia-answer__body">
+                        <label class="playtek-field playtek-field--full">
+                          <span class="playtek-field__label">Texto de apoyo</span>
+                          <input
+                            type="text"
+                            name="trivia_questions__{{ question.index }}__answers__{{ answer.index }}__label"
+                            value="{{ answer.label }}"
+                            data-trivia-editor-field="true"
+                            data-trivia-answer-label="true"
+                          />
+                        </label>
+
+                        <div class="playtek-answer-media">
+                          <input
+                            type="hidden"
+                            name="trivia_questions__{{ question.index }}__answers__{{ answer.index }}__image_url"
+                            value="{{ answer.image_url }}"
+                            data-asset-value="trivia_questions__{{ question.index }}__answers__{{ answer.index }}__image_url"
+                          />
+                          <input
+                            type="hidden"
+                            name="trivia_questions__{{ question.index }}__answers__{{ answer.index }}__image_url__clear"
+                            value="0"
+                            data-asset-clear="trivia_questions__{{ question.index }}__answers__{{ answer.index }}__image_url"
+                          />
+
+                          <label class="playtek-upload-button">
+                            <span>Subir imagen</span>
+                            <input
+                              type="file"
+                              name="trivia_questions__{{ question.index }}__answers__{{ answer.index }}__image_url__file"
+                              accept="image/*"
+                              data-asset-input="trivia_questions__{{ question.index }}__answers__{{ answer.index }}__image_url"
+                            />
+                          </label>
+
+                          <div class="playtek-asset-preview playtek-asset-preview--answer" data-asset-preview="trivia_questions__{{ question.index }}__answers__{{ answer.index }}__image_url">
+                            {% if answer.image_url %}
+                            <img src="{{ answer.image_url }}" alt="Respuesta {{ forloop.counter }}" />
+                            {% else %}
+                            <span>Sin imagen.</span>
+                            {% endif %}
+                          </div>
+
+                          <button type="button" class="playtek-link-button" data-asset-clear-button="trivia_questions__{{ question.index }}__answers__{{ answer.index }}__image_url">Quitar imagen</button>
+                        </div>
+                      </div>
+                    </div>
+                    {% endfor %}
+                  </div>
+                </article>
+                {% endfor %}
+              </div>
+            </section>
+            {% endif %}
+
+            <div class="playtek-hidden-fields">
+              {% for field in hidden_fields %}
+              {% if field.kind == "checkbox" %}
+              <input
+                type="checkbox"
+                name="{{ field.name }}"
+                data-config-field="true"
+                data-section="{{ field.section }}"
+                data-key="{{ field.key }}"
+                {% if field.value %}checked{% endif %}
+                hidden
+              />
+              {% else %}
+              <input
+                type="hidden"
+                name="{{ field.name }}"
+                value="{{ field.value|default_if_none:'' }}"
+                data-config-field="true"
+                data-section="{{ field.section }}"
+                data-key="{{ field.key }}"
+              />
+              {% endif %}
+              {% endfor %}
+            </div>
+          </form>
+        </section>
+
+        <aside class="playtek-preview">
+          <div class="playtek-preview__card">
+            <div class="playtek-preview__header">
+              <div>
+                <span class="playtek-preview__tag">Preview en vivo</span>
+                <h2>Vista previa rápida</h2>
+                <p>Resumen de portada y tablero modelo de {{ game.name }}.</p>
+              </div>
+              <span class="playtek-preview__status">Actualización automática</span>
+            </div>
+
+            <div id="previewStage" class="playtek-preview__stage playtek-preview__stage--{{ game.slug }}">
+              <div id="previewWatermark" class="playtek-preview__watermark hidden"></div>
+              <div class="playtek-phone">
+                <div class="playtek-phone__screen">
+                  <div id="previewGenericExperience">
+                    <div class="playtek-phone__badge" id="previewBadge">{{ game.name }}</div>
+                    <img id="previewLogo" class="playtek-phone__logo hidden" alt="Logo" />
+                    <h3 id="previewTitle">PUZZLE MUNDIAL</h3>
+                    <p id="previewSubtitle">Armá la imagen del mundial pieza por pieza.</p>
+                    <div class="playtek-phone__media">
+                      <img id="previewHeroImage" class="playtek-phone__hero hidden" alt="Preview" />
+                      <div id="previewHeroFallback" class="playtek-phone__hero-fallback">Sin asset cargado</div>
+                    </div>
+                    <div class="playtek-phone__chips">
+                      <span id="previewMetaOne" class="playtek-phone__chip">3 x 3</span>
+                      <span id="previewMetaTwo" class="playtek-phone__chip">180 s</span>
+                      <span id="previewMetaThree" class="playtek-phone__chip">Lista</span>
+                      <span id="previewMetaFour" class="playtek-phone__chip hidden">Extra</span>
+                    </div>
+                    <button type="button" id="previewButton" class="playtek-phone__button">Empezar puzzle</button>
+                    <p id="previewSupportText" class="playtek-phone__support hidden"></p>
+                  </div>
+
+                  <div id="previewTriviaExperience" class="playtek-trivia-preview hidden">
+                    <div class="playtek-trivia-preview__stats">
+                      <article class="playtek-trivia-stat">
+                        <span>PROGRESO</span>
+                        <strong id="previewTriviaProgress">1 / 3</strong>
+                      </article>
+                      <article class="playtek-trivia-stat">
+                        <span>PUNTAJE</span>
+                        <strong id="previewTriviaScore">100</strong>
+                      </article>
+                      <article class="playtek-trivia-stat playtek-trivia-stat--wide">
+                        <span>TIEMPO</span>
+                        <strong id="previewTriviaTimer">15s</strong>
+                        <div class="playtek-trivia-stat__bar">
+                          <div id="previewTriviaTimerFill" class="playtek-trivia-stat__fill"></div>
+                        </div>
+                      </article>
+                    </div>
+
+                    <div class="playtek-trivia-preview__card">
+                      <div class="playtek-phone__badge" id="previewTriviaBadge">TRIVIA MUNDIAL FOTOS</div>
+                      <div class="playtek-trivia-preview__media">
+                        <img id="previewTriviaImage" class="playtek-phone__hero hidden" alt="Pregunta" />
+                        <div id="previewTriviaFallback" class="playtek-phone__hero-fallback">Cargá una imagen principal para reforzar la pregunta.</div>
+                      </div>
+                      <h3 id="previewTriviaQuestionText">¿En qué año Argentina ganó su tercer Mundial de Fútbol?</h3>
+                    </div>
+
+                    <div id="previewTriviaAnswers" class="playtek-trivia-preview__answers">
+                      <button type="button" class="playtek-trivia-preview__answer">
+                        <span>A</span>
+                        <strong id="previewTriviaAnswerOne">2018</strong>
+                      </button>
+                      <button type="button" class="playtek-trivia-preview__answer">
+                        <span>B</span>
+                        <strong id="previewTriviaAnswerTwo">2022</strong>
+                      </button>
+                      <button type="button" class="playtek-trivia-preview__answer">
+                        <span>C</span>
+                        <strong id="previewTriviaAnswerThree">2014</strong>
+                      </button>
+                      <button type="button" class="playtek-trivia-preview__answer">
+                        <span>D</span>
+                        <strong id="previewTriviaAnswerFour">Francia</strong>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+
+      <div class="playtek-actionbar">
+        <a href="{% url 'customizer_home' %}" class="playtek-actionbar__button playtek-actionbar__button--ghost">Volver</a>
+        <button type="button" id="focusPreviewButton" class="playtek-actionbar__button playtek-actionbar__button--ghost">Vista previa</button>
+        {% if game.is_enabled %}
+        <a href="{% url 'runner_page' game.slug %}" target="_blank" class="playtek-actionbar__button playtek-actionbar__button--ghost">Iniciar sesión ficha</a>
+        {% else %}
+        <button type="button" class="playtek-actionbar__button playtek-actionbar__button--ghost" disabled>Iniciar sesión ficha</button>
+        {% endif %}
+        <button type="button" id="saveButton" class="playtek-actionbar__button playtek-actionbar__button--primary">Guardar customización</button>
+      </div>
+
+      <div class="playtek-statusbar">
+        <p id="saveStatus">Listo para editar.</p>
+      </div>
+    </main>
+  </div>
+
+  {{ initial_config|json_script:"initial-config" }}
+  {{ default_config|json_script:"default-config" }}
+  <script src="{% static 'games/js/customizer.js' %}"></script>
+</body>
+</html>
