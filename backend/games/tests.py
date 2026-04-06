@@ -195,3 +195,47 @@ class CustomizerViewsTests(TestCase):
             questions[1].answers.get(is_correct=True).label,
             "3",
         )
+
+    def test_keeper_customizer_save_affects_runner_session_config(self):
+        config = self.create_game_config(Game.SLUG_ARQUERO, "El del Arquero")
+        payload = self.build_structured_payload(config.game.slug, config.config)
+        payload["texts__welcome_title"] = "ARQUERO EDITADO"
+        payload["texts__cta_button"] = "JUGAR YA"
+        payload["texts__instructions_text"] = "Ataja todo lo que puedas."
+        payload["rules__timer_seconds"] = "77"
+        payload["rules__points_per_save"] = "17"
+        payload["rules__bonus_ball_enabled"] = "on"
+        payload["rules__bonus_points"] = "50"
+        payload["rules__penalty_ball_enabled"] = "on"
+        payload["rules__penalty_points"] = "11"
+        payload["branding__ball_image_url"] = "https://example.com/ball.png"
+        payload["content__sponsor_top_left"] = "MARCA X"
+        payload["visual__field_green_color"] = "#123456"
+
+        response = self.client.post(
+            f"/api/personalizacion/{config.game.slug}/guardar/",
+            data=payload,
+        )
+
+        self.assertEqual(response.status_code, 200, response.content)
+        config.refresh_from_db()
+        self.assertEqual(config.config["texts"]["welcome_title"], "ARQUERO EDITADO")
+        self.assertEqual(config.config["rules"]["timer_seconds"], 77)
+        self.assertEqual(config.config["content"]["sponsor_top_left"], "MARCA X")
+
+        session_response = self.client.post(f"/api/sesion/iniciar/{config.game.slug}/")
+        self.assertEqual(session_response.status_code, 201, session_response.content)
+
+        session_config = session_response.json()["config"]
+        self.assertEqual(session_config["texts"]["welcome_title"], "ARQUERO EDITADO")
+        self.assertEqual(session_config["texts"]["cta_button"], "JUGAR YA")
+        self.assertEqual(session_config["texts"]["instructions_text"], "Ataja todo lo que puedas.")
+        self.assertEqual(session_config["rules"]["timer_seconds"], 77)
+        self.assertEqual(session_config["rules"]["points_per_save"], 17)
+        self.assertEqual(session_config["rules"]["bonus_ball_enabled"], True)
+        self.assertEqual(session_config["rules"]["bonus_points"], 50)
+        self.assertEqual(session_config["rules"]["penalty_ball_enabled"], True)
+        self.assertEqual(session_config["rules"]["penalty_points"], 11)
+        self.assertEqual(session_config["branding"]["ball_image_url"], "https://example.com/ball.png")
+        self.assertEqual(session_config["content"]["sponsor_top_left"], "MARCA X")
+        self.assertEqual(session_config["visual"]["field_green_color"], "#123456")

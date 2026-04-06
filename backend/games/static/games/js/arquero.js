@@ -3,6 +3,8 @@
 
   const GAME_SLUG = window.GAME_SLUG || "el-del-arquero";
   const RETURN_URL = window.RETURN_URL || "/";
+  const GOALKEEPER_VIEWBOX_WIDTH = 120;
+  const GOALKEEPER_VIEWBOX_HEIGHT = 150;
 
   const state = {
     session: null,
@@ -99,7 +101,7 @@
         timer_seconds: 60,
         show_score: true,
         show_saves: true,
-        goalkeeper_width: 110,
+        goalkeeper_width: 120,
         points_per_save: 10,
         ball_speed_min: 4,
         ball_speed_max: 8,
@@ -191,11 +193,13 @@
     const detail = safeText(state.config.visual.goalkeeper_detail_color, "#3b82f6");
     const glove = safeText(state.config.visual.goalkeeper_glove_color, "#22c55e");
     const width = safeNumber(state.config.rules.goalkeeper_width, 110);
+    const height = Math.round((width / GOALKEEPER_VIEWBOX_WIDTH) * GOALKEEPER_VIEWBOX_HEIGHT);
 
     el.goalkeeper.style.left = `${state.goalkeeperX}px`;
     el.goalkeeper.style.width = `${width}px`;
+    el.goalkeeper.style.height = `${height}px`;
     el.goalkeeper.innerHTML = `
-      <svg viewBox="0 0 120 150" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+      <svg viewBox="0 0 ${GOALKEEPER_VIEWBOX_WIDTH} ${GOALKEEPER_VIEWBOX_HEIGHT}" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
         <ellipse cx="60" cy="100" rx="30" ry="35" fill="${jersey}" />
         <ellipse cx="60" cy="95" rx="25" ry="28" fill="${detail}" />
         <rect x="50" y="66" width="20" height="54" fill="${jersey}" />
