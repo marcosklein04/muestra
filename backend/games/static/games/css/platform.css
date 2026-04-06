@@ -96,15 +96,15 @@ body {
 
 .brand-logo-image {
   display: block;
-  width: clamp(150px, 22vw, 230px);
-  height: auto;
-  max-height: 56px;
+  width: auto;
+  height: 40px;
+  max-width: clamp(110px, 14vw, 150px);
   object-fit: contain;
   flex-shrink: 0;
-  padding: 8px 14px;
-  border-radius: 16px;
+  padding: 5px 8px;
+  border-radius: 12px;
   background: #ffffff;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.16);
 }
 
 .brand-name {
