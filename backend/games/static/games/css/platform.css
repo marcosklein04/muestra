@@ -97,8 +97,8 @@ body {
 .brand-logo-image {
   display: block;
   width: auto;
-  height: 18px;
-  max-width: clamp(60px, 7vw, 72px);
+  height: 16px;
+  max-width: clamp(52px, 6vw, 64px);
   object-fit: contain;
   flex-shrink: 0;
   padding: 1px 3px;
