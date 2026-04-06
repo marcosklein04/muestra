@@ -102,7 +102,7 @@ GAME_PRESETS = [
     },
     {
         "slug": "el-del-arquero",
-        "name": "El del Arquero",
+        "name": "ATAJA PENALES",
         "description": "Move al arquero y ataja todos los remates.",
         "sort_order": 3,
         "is_featured": True,
@@ -119,7 +119,7 @@ GAME_PRESETS = [
                 "penalty_ball_image_url": "",
             },
             "texts": {
-                "welcome_title": "EL DEL ARQUERO",
+                "welcome_title": "ATAJA PENALES",
                 "welcome_subtitle": "Move al arquero de lado a lado y ataja todos los remates.",
                 "cta_button": "Tocar para jugar",
                 "completion_title": "FIN DEL JUEGO",

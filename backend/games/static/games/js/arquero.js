@@ -88,7 +88,7 @@
         penalty_ball_image_url: "",
       },
       texts: {
-        welcome_title: "EL DEL ARQUERO",
+        welcome_title: "ATAJA PENALES",
         welcome_subtitle: "Mové al arquero de lado a lado y atajá todos los remates.",
         cta_button: "Tocar para jugar",
         completion_title: "FIN DEL JUEGO",
@@ -527,7 +527,7 @@
     el.heroImage.classList.toggle("hidden", !branding.welcome_image_url);
     if (branding.welcome_image_url) el.heroImage.src = branding.welcome_image_url;
 
-    el.title.textContent = safeText(texts.welcome_title, "EL DEL ARQUERO");
+    el.title.textContent = safeText(texts.welcome_title, "ATAJA PENALES");
     el.subtitle.textContent = safeText(texts.welcome_subtitle, "Mové al arquero de lado a lado y atajá todos los remates.");
 
     const defaultInstructions = "Arrastrá al portero a izquierda y derecha para parar los balones.";

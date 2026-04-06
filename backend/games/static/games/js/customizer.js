@@ -476,7 +476,7 @@
     const texts = config.texts || {};
     const rules = config.rules || {};
 
-    preview.badge.textContent = "El del Arquero";
+    preview.badge.textContent = "ATAJA PENALES";
     setPreviewImage(getAssetPreviewUrl("branding__welcome_image_url", ""));
     preview.metaOne.textContent = `${safeNumber(rules.timer_seconds, 60)} s`;
     preview.metaTwo.textContent = `${safeNumber(rules.points_per_save, 10)} pts`;

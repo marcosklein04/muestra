@@ -197,7 +197,7 @@ class CustomizerViewsTests(TestCase):
         )
 
     def test_keeper_customizer_save_affects_runner_session_config(self):
-        config = self.create_game_config(Game.SLUG_ARQUERO, "El del Arquero")
+        config = self.create_game_config(Game.SLUG_ARQUERO, "ATAJA PENALES")
         payload = self.build_structured_payload(config.game.slug, config.config)
         payload["texts__welcome_title"] = "ARQUERO EDITADO"
         payload["texts__cta_button"] = "JUGAR YA"
