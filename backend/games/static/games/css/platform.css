@@ -94,6 +94,19 @@ body {
   flex-shrink: 0;
 }
 
+.brand-logo-image {
+  display: block;
+  width: clamp(150px, 22vw, 230px);
+  height: auto;
+  max-height: 56px;
+  object-fit: contain;
+  flex-shrink: 0;
+  padding: 8px 14px;
+  border-radius: 16px;
+  background: #ffffff;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.18);
+}
+
 .brand-name {
   font-size: 22px;
   font-weight: 800;
