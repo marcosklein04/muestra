@@ -80,7 +80,7 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
-  max-width: 56px;
+  max-width: 96px;
   overflow: hidden;
 }
 
@@ -98,9 +98,9 @@ body {
 
 .brand-logo-image {
   display: block;
-  width: 56px;
+  width: 96px;
   height: auto;
-  max-width: 56px;
+  max-width: 96px;
   object-fit: contain;
   flex-shrink: 0;
   padding: 0;
