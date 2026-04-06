@@ -80,6 +80,8 @@ body {
   display: flex;
   align-items: center;
   gap: 12px;
+  max-width: 56px;
+  overflow: hidden;
 }
 
 .brand-logo-mark {
@@ -96,15 +98,15 @@ body {
 
 .brand-logo-image {
   display: block;
-  width: auto;
-  height: 16px;
-  max-width: clamp(52px, 6vw, 64px);
+  width: 56px;
+  height: auto;
+  max-width: 56px;
   object-fit: contain;
   flex-shrink: 0;
-  padding: 1px 3px;
-  border-radius: 6px;
-  background: #ffffff;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
 }
 
 .brand-name {
